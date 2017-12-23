@@ -29,6 +29,7 @@
 		0DDB40501FEAA891005F7777 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DDB404F1FEAA891005F7777 /* libc++.tbd */; };
 		D01435E0E22D6EE8936E2707 /* Pods_MeetingSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E56F0C7E728C04D8B58B19D /* Pods_MeetingSystem.framework */; };
 		FE2150141FEB605500B1823C /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2150131FEB605500B1823C /* PlayerView.m */; };
+		FE8B6D331FEDF375006E1DBD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B6D321FEDF375006E1DBD /* LoginViewController.m */; };
 		FECE1EB21FECDF270083E4D0 /* ToolsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE1EB11FECDF270083E4D0 /* ToolsHelper.m */; };
 		FECE1EB51FECDF340083E4D0 /* UserHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE1EB41FECDF340083E4D0 /* UserHelper.m */; };
 		FECE1EBA1FECDF660083E4D0 /* UIColor+App.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE1EB91FECDF660083E4D0 /* UIColor+App.m */; };
@@ -66,6 +67,8 @@
 		8E56F0C7E728C04D8B58B19D /* Pods_MeetingSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeetingSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE2150121FEB605500B1823C /* PlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerView.h; sourceTree = "<group>"; };
 		FE2150131FEB605500B1823C /* PlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerView.m; sourceTree = "<group>"; };
+		FE8B6D311FEDF375006E1DBD /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		FE8B6D321FEDF375006E1DBD /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		FECE1EAE1FECDE990083E4D0 /* GlobalDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDefine.h; sourceTree = "<group>"; };
 		FECE1EB01FECDF270083E4D0 /* ToolsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToolsHelper.h; sourceTree = "<group>"; };
 		FECE1EB11FECDF270083E4D0 /* ToolsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToolsHelper.m; sourceTree = "<group>"; };
@@ -182,8 +185,9 @@
 		FE2150101FEB601B00B1823C /* MainClass */ = {
 			isa = PBXGroup;
 			children = (
-				FECE1EA41FECD99B0083E4D0 /* Base */,
+				FE8B6D2F1FEDE197006E1DBD /* Base */,
 				FECE1EA51FECD9D70083E4D0 /* Home */,
+				FE8B6D341FEDF384006E1DBD /* Login */,
 				FE2150111FEB602900B1823C /* Player */,
 			);
 			path = MainClass;
@@ -198,6 +202,29 @@
 			path = Player;
 			sourceTree = "<group>";
 		};
+		FE8B6D2F1FEDE197006E1DBD /* Base */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		FE8B6D301FEDE5CF006E1DBD /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FE8B6D341FEDF384006E1DBD /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				FE8B6D311FEDF375006E1DBD /* LoginViewController.h */,
+				FE8B6D321FEDF375006E1DBD /* LoginViewController.m */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		FECE1EA31FECD9810083E4D0 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,18 +234,11 @@
 			path = AppDelegate;
 			sourceTree = "<group>";
 		};
-		FECE1EA41FECD99B0083E4D0 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
 		FECE1EA51FECD9D70083E4D0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				FE8B6D301FEDE5CF006E1DBD /* View */,
 				FECE1EC31FECFE810083E4D0 /* Model */,
-				FECE1EBF1FECF0530083E4D0 /* View */,
 				FECE1EBC1FECEB6D0083E4D0 /* HomeViewController.h */,
 				FECE1EBD1FECEB6D0083E4D0 /* HomeViewController.m */,
 			);
@@ -296,13 +316,6 @@
 				FECE1EB91FECDF660083E4D0 /* UIColor+App.m */,
 			);
 			path = FontColor;
-			sourceTree = "<group>";
-		};
-		FECE1EBF1FECF0530083E4D0 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		FECE1EC31FECFE810083E4D0 /* Model */ = {
@@ -441,6 +454,7 @@
 				0DDB40291FEA9FDC005F7777 /* main.m in Sources */,
 				FECE1EC21FECFE740083E4D0 /* HomePlayerModel.m in Sources */,
 				0DDB401B1FEA9FDC005F7777 /* AppDelegate.m in Sources */,
+				FE8B6D331FEDF375006E1DBD /* LoginViewController.m in Sources */,
 				FECE1EB51FECDF340083E4D0 /* UserHelper.m in Sources */,
 				FE2150141FEB605500B1823C /* PlayerView.m in Sources */,
 				FECE1EBE1FECEB6D0083E4D0 /* HomeViewController.m in Sources */,

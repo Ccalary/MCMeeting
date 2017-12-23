@@ -9,6 +9,10 @@
 #import "PlayerView.h"
 #import <IJKMediaFramework/IJKMediaFramework.h>
 @interface PlayerView()
+{
+    CGPoint startPoint;
+    CGPoint originPoint;
+}
 @property (nonatomic, strong) IJKFFMoviePlayerController *ijkPlayer; //播放器
 @property (nonatomic, strong) NSString *urlStr; //播放地址
 @property (nonatomic, assign) int type; //编号
@@ -54,13 +58,14 @@
     //开启硬解码
     [options setPlayerOptionIntValue:1  forKey:@"videotoolbox"];
     
-    //ijk播放器
+    [IJKFFMoviePlayerController setLogReport:NO]; //是否打印日志
+    [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_FATAL];//日志等级
+
+    // ijk播放器
     self.ijkPlayer = [[IJKFFMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:self.urlStr] withOptions:options];
     [self addSubview:self.ijkPlayer.view];
-    
-    [self.ijkPlayer.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self);
-    }];
+    self.ijkPlayerView = self.ijkPlayer.view;
+    self.ijkPlayer.view.frame = self.bounds;
     
     //填充方式
     [self.ijkPlayer setScalingMode:IJKMPMovieScalingModeAspectFit];
@@ -71,27 +76,89 @@
     if(![self.ijkPlayer isPlaying]){
         [self.ijkPlayer prepareToPlay];
     }
+  
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    label.text = [NSString stringWithFormat:@"%d",self.type];
+    label.textColor = [UIColor whiteColor];
+    [self addSubview:label];
     
     //放大缩小手势
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
     [self addGestureRecognizer:pinch];
+    
+    //长按拖动
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)];
+    [self addGestureRecognizer:longPress];
 }
 
+#pragma mark - Action
+//放大缩小
 - (void)pinchAction:(UIPinchGestureRecognizer *)gesture{
-    NSLog(@"scale:%f",gesture.scale);
     if (gesture.state == UIGestureRecognizerStateChanged){
         if (gesture.scale >= 1.5){
-            NSLog(@"放大");
+            DLog(@"放大");
             if ([self.delegate respondsToSelector:@selector(playViewScaleWithState:type:)]){
                 [self.delegate playViewScaleWithState:PlayerViewScaleStateZoomIn type:self.type];
             }
         }else if (gesture.scale <= 0.8){
-            NSLog(@"缩小");
+            DLog(@"缩小");
             if ([self.delegate respondsToSelector:@selector(playViewScaleWithState:type:)]){
                 [self.delegate playViewScaleWithState:PlayerViewScaleStateZoomOut type:self.type];
             }
         }
     }
+}
+////拖拽
+//- (void)panAction:(UIPanGestureRecognizer *)gesture{
+//    //获取拖拽手势在view 的拖拽姿态
+//    CGPoint translation = [gesture translationInView:self];
+//    //改变gesture.view的中心点
+//    gesture.view.center = CGPointMake(gesture.view.center.x + translation.x, gesture.view.center.y + translation.y);
+//    //重置拖拽手势的姿态
+//    [gesture setTranslation:CGPointZero inView:self];
+//    DLog(@"拖拽point:%@",NSStringFromCGPoint(translation));
+//    DLog(@"center:%@",NSStringFromCGPoint(gesture.view.center));
+//}
+
+//长按拖动
+- (void)longPressAction:(UILongPressGestureRecognizer *)gesture{
+    if (self.playModel.isBig) return;
+    if (gesture.state == UIGestureRecognizerStateBegan){
+        [self.superview bringSubviewToFront:self];
+        //手指按压的点
+        startPoint = [gesture locationInView:gesture.view];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.transform = CGAffineTransformMakeScale(1.1, 1.1);
+            self.alpha = 0.8;
+        }];
+    }else if (gesture.state == UIGestureRecognizerStateChanged){
+        CGPoint newPoint = [gesture locationInView:gesture.view];
+        CGFloat deltaX = newPoint.x-startPoint.x;
+        CGFloat deltaY = newPoint.y-startPoint.y;
+        self.center = CGPointMake(self.center.x+deltaX,self.center.y+deltaY);
+        //以中点为中心创建一个正方形区域40x40
+        CGRect centerRect = CGRectMake(self.center.x - 20, self.center.y - 20, 40, 40);
+        if ([self.delegate respondsToSelector:@selector(playViewLongPressWithGesture:centerRect:type:)]){
+            [self.delegate playViewLongPressWithGesture:gesture centerRect:centerRect type:self.type];
+        }
+
+    }else if (gesture.state == UIGestureRecognizerStateEnded){
+        [UIView animateWithDuration:0.3 animations:^{
+            self.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            self.alpha = 1;
+        }];
+        if ([self.delegate respondsToSelector:@selector(playViewLongPressWithGesture:centerRect:type:)]){
+            [self.delegate playViewLongPressWithGesture:gesture centerRect:CGRectZero type:self.type];
+        }
+    }
+}
+
+//判断中点是否在自己内部
+- (BOOL)viewInsideWithOriginPoint:(CGPoint)originPoint newPoint:(CGPoint)newPoint{
+    CGFloat c = sqrt(pow(originPoint.x - newPoint.x, 2) + pow(originPoint.y - newPoint.y, 2));
+    CGFloat r = self.frame.size.width/2.0;
+    return c <= r;
 }
 
 //network load state changes

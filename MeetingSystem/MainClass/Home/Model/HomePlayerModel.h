@@ -13,4 +13,8 @@
 @property (nonatomic, strong) PlayerView *playView;
 /** 是否大窗口*/
 @property (nonatomic, assign, getter=isBig) BOOL big;
+/** view的布局 */
+@property (nonatomic, assign) CGRect frame;
+/** 标签 */
+@property (nonatomic, assign) int type;
 @end
