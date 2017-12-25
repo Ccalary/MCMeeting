@@ -10,8 +10,9 @@
 #import "PlayerView.h"
 #import "HomePlayerModel.h"
 #import "LoginViewController.h"
+#import "HomeVideoListView.h"
 
-#define url_0 @"http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8"
+#define url_0 @"rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp"
 #define url_1 @"rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov"
 #define url_2 @"rtmp://live.hkstv.hk.lxdns.com/live/hks"
 #define url_4 @"http://wvideo.spriteapp.cn/video/2016/0328/56f8ec01d9bfe_wpd.mp4"
@@ -29,6 +30,7 @@
 @property (nonatomic, strong) UIView *videoView; //视频区域
 @property (nonatomic, strong) PlayerView *playView0, *playView1, *playView2, *playView3;//播放器
 @property (nonatomic, strong) NSMutableArray *playerArray;
+@property (nonatomic, strong) HomeVideoListView *listView;//视频列表
 @end
 
 @implementation HomeViewController
@@ -55,7 +57,7 @@
     playMargin = 2;//间距
     totalLen = playPadding + playWidth + playMargin;
     
-    _playView0 = [[PlayerView alloc] initWithFrame:CGRectMake(playPadding, playPadding, playWidth, playWidth) url:url_4 type:0];
+    _playView0 = [[PlayerView alloc] initWithFrame:CGRectMake(playPadding, playPadding, playWidth, playWidth) url:url_0 type:0];
     _playView0.delegate = self;
     [self.videoView addSubview:_playView0];
    
@@ -100,25 +102,24 @@
     self.playView3.playModel = model3;
     [self.playerArray addObject:model3];
     
-//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10, ScreenHeight - 100, ScreenWidth - 20, 50)];
-//    [button setTitle:@"push" forState:UIControlStateNormal];
-//    button.backgroundColor = [UIColor blueColor];
-//    [button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:button];
+    self.listView = [[HomeVideoListView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth - 20, 110)];
+    [self.view addSubview:self.listView];
+    [self.listView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.offset(10);
+        make.right.offset(-10);
+        make.top.equalTo(_videoView.mas_bottom).offset(20);
+        make.height.mas_equalTo(110);
+    }];
+    
 }
 
-- (void)buttonAction{
-    [self.navigationController pushViewController:[[LoginViewController alloc] init] animated:YES];
-}
 
 #pragma mark - 播放器界面代理
 //放大缩小手势
 - (void)playViewScaleWithState:(PlayerViewScaleState)state type:(int)type{
-    
     if (self.playerArray.count <= type) return; //判断越界
     HomePlayerModel *model = self.playerArray[type];
     PlayerView *playView = model.playView;
-    
     switch (state) {
         case PlayerViewScaleStateZoomIn://放大
         {
@@ -151,7 +152,6 @@
 - (void)playViewLongPressWithGesture:(UILongPressGestureRecognizer *)gesture centerRect:(CGRect)rect type:(int)type{
     if (self.playerArray.count <= type) return; //判断越界
     HomePlayerModel *model = self.playerArray[type];
-    PlayerView *playView = model.playView;
     if (gesture.state == UIGestureRecognizerStateChanged){
         __weak typeof (self) weakSelf = self;
         [self.playerArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -188,11 +188,6 @@
                 objModel.frame = pressFrame;
             }
         }];
-    }else if (gesture.state == UIGestureRecognizerStateEnded){
-        [UIView animateWithDuration:0.3 animations:^{
-            playView.frame = model.frame;
-        }];
     }
 }
-
 @end

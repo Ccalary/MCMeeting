@@ -60,7 +60,7 @@
     
     [IJKFFMoviePlayerController setLogReport:NO]; //是否打印日志
     [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_FATAL];//日志等级
-
+/*
     // ijk播放器
     self.ijkPlayer = [[IJKFFMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:self.urlStr] withOptions:options];
     [self addSubview:self.ijkPlayer.view];
@@ -76,7 +76,7 @@
     if(![self.ijkPlayer isPlaying]){
         [self.ijkPlayer prepareToPlay];
     }
-  
+*/
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     label.text = [NSString stringWithFormat:@"%d",self.type];
@@ -97,12 +97,10 @@
 - (void)pinchAction:(UIPinchGestureRecognizer *)gesture{
     if (gesture.state == UIGestureRecognizerStateChanged){
         if (gesture.scale >= 1.5){
-            DLog(@"放大");
             if ([self.delegate respondsToSelector:@selector(playViewScaleWithState:type:)]){
                 [self.delegate playViewScaleWithState:PlayerViewScaleStateZoomIn type:self.type];
             }
         }else if (gesture.scale <= 0.8){
-            DLog(@"缩小");
             if ([self.delegate respondsToSelector:@selector(playViewScaleWithState:type:)]){
                 [self.delegate playViewScaleWithState:PlayerViewScaleStateZoomOut type:self.type];
             }
@@ -147,18 +145,9 @@
         [UIView animateWithDuration:0.3 animations:^{
             self.transform = CGAffineTransformMakeScale(1.0, 1.0);
             self.alpha = 1;
+            self.frame = self.playModel.frame;
         }];
-        if ([self.delegate respondsToSelector:@selector(playViewLongPressWithGesture:centerRect:type:)]){
-            [self.delegate playViewLongPressWithGesture:gesture centerRect:CGRectZero type:self.type];
-        }
     }
-}
-
-//判断中点是否在自己内部
-- (BOOL)viewInsideWithOriginPoint:(CGPoint)originPoint newPoint:(CGPoint)newPoint{
-    CGFloat c = sqrt(pow(originPoint.x - newPoint.x, 2) + pow(originPoint.y - newPoint.y, 2));
-    CGFloat r = self.frame.size.width/2.0;
-    return c <= r;
 }
 
 //network load state changes

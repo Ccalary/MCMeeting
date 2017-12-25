@@ -35,6 +35,8 @@
 		FECE1EBA1FECDF660083E4D0 /* UIColor+App.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE1EB91FECDF660083E4D0 /* UIColor+App.m */; };
 		FECE1EBE1FECEB6D0083E4D0 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE1EBD1FECEB6D0083E4D0 /* HomeViewController.m */; };
 		FECE1EC21FECFE740083E4D0 /* HomePlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE1EC11FECFE740083E4D0 /* HomePlayerModel.m */; };
+		FEEBBF131FF08FA200CDB40B /* HomeVideoListView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEBBF121FF08FA200CDB40B /* HomeVideoListView.m */; };
+		FEEBBF171FF0928A00CDB40B /* HomeVideoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEBBF161FF0928A00CDB40B /* HomeVideoCollectionCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +83,10 @@
 		FECE1EBD1FECEB6D0083E4D0 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		FECE1EC01FECFE740083E4D0 /* HomePlayerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePlayerModel.h; sourceTree = "<group>"; };
 		FECE1EC11FECFE740083E4D0 /* HomePlayerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePlayerModel.m; sourceTree = "<group>"; };
+		FEEBBF111FF08FA200CDB40B /* HomeVideoListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeVideoListView.h; sourceTree = "<group>"; };
+		FEEBBF121FF08FA200CDB40B /* HomeVideoListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeVideoListView.m; sourceTree = "<group>"; };
+		FEEBBF151FF0928A00CDB40B /* HomeVideoCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeVideoCollectionCell.h; sourceTree = "<group>"; };
+		FEEBBF161FF0928A00CDB40B /* HomeVideoCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeVideoCollectionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +218,8 @@
 		FE8B6D301FEDE5CF006E1DBD /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FEEBBF111FF08FA200CDB40B /* HomeVideoListView.h */,
+				FEEBBF121FF08FA200CDB40B /* HomeVideoListView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -237,6 +245,7 @@
 		FECE1EA51FECD9D70083E4D0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				FEEBBF141FF0925300CDB40B /* Cell */,
 				FE8B6D301FEDE5CF006E1DBD /* View */,
 				FECE1EC31FECFE810083E4D0 /* Model */,
 				FECE1EBC1FECEB6D0083E4D0 /* HomeViewController.h */,
@@ -325,6 +334,15 @@
 				FECE1EC11FECFE740083E4D0 /* HomePlayerModel.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		FEEBBF141FF0925300CDB40B /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				FEEBBF151FF0928A00CDB40B /* HomeVideoCollectionCell.h */,
+				FEEBBF161FF0928A00CDB40B /* HomeVideoCollectionCell.m */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -450,6 +468,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FECE1EBA1FECDF660083E4D0 /* UIColor+App.m in Sources */,
+				FEEBBF131FF08FA200CDB40B /* HomeVideoListView.m in Sources */,
 				FECE1EB21FECDF270083E4D0 /* ToolsHelper.m in Sources */,
 				0DDB40291FEA9FDC005F7777 /* main.m in Sources */,
 				FECE1EC21FECFE740083E4D0 /* HomePlayerModel.m in Sources */,
@@ -457,6 +476,7 @@
 				FE8B6D331FEDF375006E1DBD /* LoginViewController.m in Sources */,
 				FECE1EB51FECDF340083E4D0 /* UserHelper.m in Sources */,
 				FE2150141FEB605500B1823C /* PlayerView.m in Sources */,
+				FEEBBF171FF0928A00CDB40B /* HomeVideoCollectionCell.m in Sources */,
 				FECE1EBE1FECEB6D0083E4D0 /* HomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
