@@ -102,6 +102,7 @@
         NSString *operatorId = [resultSet objectForColumn:@"operatorId"];
         NSString *content = [resultSet objectForColumn:@"content"];
         int result = [resultSet intForColumn:@"result"];
+        DLog(@"time:%@--content:%@",time,content);
         LogModel *model = [[LogModel alloc] init];
         model.time = time;
         model.roomNo = roomNo;

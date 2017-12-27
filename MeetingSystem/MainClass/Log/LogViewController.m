@@ -27,13 +27,11 @@
 //    [self fmdbTest];
     LogFmdbTools *tools = [LogFmdbTools shareInstance];
     LogModel *model = [[LogModel alloc] init];
-    model.time = [ToolsHelper getCurrentTime];
     model.operatorId = @"00000";
     model.roomNo = @"1000";
     model.content = @"操作成功";
     model.result = 1;
     [tools insertModel:model];
-    
 }
 
 - (void)didReceiveMemoryWarning {

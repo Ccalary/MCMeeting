@@ -7,7 +7,13 @@
 //
 
 #import "LogModel.h"
+#import "ToolsHelper.h"
 
 @implementation LogModel
-
+- (instancetype)init{
+    if (self = [super init]){
+        self.time = [ToolsHelper getCurrentTime];
+    }
+    return self;
+}
 @end
