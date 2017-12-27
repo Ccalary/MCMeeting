@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 @interface ToolsHelper : NSObject
-/**设备是否是iPad*/
+/** 设备是否是iPad */
 + (BOOL)getIsIpad;
+
+/** 获得当前的时间 */
++ (NSString *)getCurrentTime;
 @end

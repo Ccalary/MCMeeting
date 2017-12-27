@@ -10,7 +10,7 @@
 #import "LogModel.h"
 #import <FMDB/FMDB.h>
 #import "LogFmdbTools.h"
-
+#import "ToolsHelper.h"
 #define KTBUserInfo @"userInfo"//用户信息表
 
 @interface LogViewController ()
@@ -27,7 +27,7 @@
 //    [self fmdbTest];
     LogFmdbTools *tools = [LogFmdbTools shareInstance];
     LogModel *model = [[LogModel alloc] init];
-    model.time = @"2017.12.27";
+    model.time = [ToolsHelper getCurrentTime];
     model.operatorId = @"00000";
     model.roomNo = @"1000";
     model.content = @"操作成功";
