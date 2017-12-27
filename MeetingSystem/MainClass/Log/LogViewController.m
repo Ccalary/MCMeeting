@@ -1,28 +1,39 @@
 //
-//  LoginViewController.m
+//  LogViewController.m
 //  MeetingSystem
 //
-//  Created by chh on 2017/12/23.
+//  Created by chh on 2017/12/27.
 //  Copyright © 2017年 caohouhong. All rights reserved.
 //
 
-#import "LoginViewController.h"
+#import "LogViewController.h"
+#import "LogModel.h"
 #import <FMDB/FMDB.h>
+#import "LogFmdbTools.h"
 
 #define KTBUserInfo @"userInfo"//用户信息表
 
-@interface LoginViewController ()
+@interface LogViewController ()
 {
     FMDatabase *fmdb;
 }
 @end
 
-@implementation LoginViewController
+@implementation LogViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self fmdbTest];
+//    [self fmdbTest];
+    LogFmdbTools *tools = [LogFmdbTools shareInstance];
+    LogModel *model = [[LogModel alloc] init];
+    model.time = @"2017.12.27";
+    model.operatorId = @"00000";
+    model.roomNo = @"1000";
+    model.content = @"操作成功";
+    model.result = 1;
+    [tools insertModel:model];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,7 +51,7 @@
     //1.获得数据库文件的路径
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES)  lastObject];
     //和上面那个路径相同
-//    NSString *str = [NSHomeDirectory() stringByAppendingString:@"/Documents"];
+    //    NSString *str = [NSHomeDirectory() stringByAppendingString:@"/Documents"];
     NSString *fileName = [doc stringByAppendingPathComponent:@"testFMDB.sqlite"];
     
     //2.数据库打开、创建
@@ -50,7 +61,7 @@
 #pragma mark - FMDB创建表
 - (void)fmdbTableCreate{
     
-     NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (ID INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, age INTEGER, weigth INTEGER, sex INTEGER, phoneNum VARCHAR);",KTBUserInfo];
+    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (ID INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, age INTEGER, weigth INTEGER, sex INTEGER, phoneNum VARCHAR);",KTBUserInfo];
     
     [self fmdbExecuteUpdate:sql];
 }
@@ -63,7 +74,7 @@
          * 执行更新返回一个BOOL值。YES表示 执行成功，否则表示有错误。你可以调用 -lastErrorMessage 和 -lastErrorCode方法来得到更多信息。
          */
         if ([fmdb executeUpdate:sql]){
-             NSLog(@"fmdb操作表%@成功！",KTBUserInfo);
+            NSLog(@"fmdb操作表%@成功！",KTBUserInfo);
         }else{
             NSLog(@"%@%@%@ lastErrorMessage：%@，lastErrorCode：%d",@"fmdb创建",KTBUserInfo,@"失败！",fmdb.lastErrorMessage,fmdb.lastErrorCode);
         }
@@ -105,7 +116,9 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [self fmdbUpdateData];
-    [self fmdbSelectData];
+//    [self fmdbUpdateData];
+//    [self fmdbSelectData];
+    NSArray *array = [[LogFmdbTools shareInstance] selectData];
 }
+
 @end

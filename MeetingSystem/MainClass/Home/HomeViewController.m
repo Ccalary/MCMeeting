@@ -9,7 +9,7 @@
 #import "HomeViewController.h"
 #import "PlayerView.h"
 #import "HomePlayerModel.h"
-#import "LoginViewController.h"
+#import "LogViewController.h"
 #import "HomeVideoListView.h"
 
 #define url_0 @"rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp"
@@ -110,9 +110,23 @@
         make.top.equalTo(_videoView.mas_bottom).offset(20);
         make.height.mas_equalTo(110);
     }];
-    
+   
+    UIButton *button = [[UIButton alloc] init];
+    [button setBackgroundColor:[UIColor blueColor]];
+    [button setTitle:@"push" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.offset(15);
+        make.right.offset(-15);
+        make.bottom.offset(-50);
+        make.height.mas_equalTo(50);
+    }];
 }
 
+- (void)buttonAction{
+    [self.navigationController pushViewController:[LogViewController new] animated:YES];
+}
 
 #pragma mark - 播放器界面代理
 //放大缩小手势

@@ -29,6 +29,9 @@
 		0DDB40501FEAA891005F7777 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DDB404F1FEAA891005F7777 /* libc++.tbd */; };
 		D01435E0E22D6EE8936E2707 /* Pods_MeetingSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E56F0C7E728C04D8B58B19D /* Pods_MeetingSystem.framework */; };
 		FE2150141FEB605500B1823C /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2150131FEB605500B1823C /* PlayerView.m */; };
+		FE5C1DB81FF38B3E003F0122 /* LogModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5C1DB71FF38B3E003F0122 /* LogModel.m */; };
+		FE5C1DBB1FF38D7B003F0122 /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5C1DBA1FF38D7B003F0122 /* LogViewController.m */; };
+		FE5C1DBE1FF395D4003F0122 /* LogFmdbTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5C1DBD1FF395D4003F0122 /* LogFmdbTools.m */; };
 		FE8B6D331FEDF375006E1DBD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B6D321FEDF375006E1DBD /* LoginViewController.m */; };
 		FECE1EB21FECDF270083E4D0 /* ToolsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE1EB11FECDF270083E4D0 /* ToolsHelper.m */; };
 		FECE1EB51FECDF340083E4D0 /* UserHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE1EB41FECDF340083E4D0 /* UserHelper.m */; };
@@ -69,6 +72,12 @@
 		8E56F0C7E728C04D8B58B19D /* Pods_MeetingSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeetingSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE2150121FEB605500B1823C /* PlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerView.h; sourceTree = "<group>"; };
 		FE2150131FEB605500B1823C /* PlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerView.m; sourceTree = "<group>"; };
+		FE5C1DB61FF38B3E003F0122 /* LogModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogModel.h; sourceTree = "<group>"; };
+		FE5C1DB71FF38B3E003F0122 /* LogModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogModel.m; sourceTree = "<group>"; };
+		FE5C1DB91FF38D7B003F0122 /* LogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
+		FE5C1DBA1FF38D7B003F0122 /* LogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
+		FE5C1DBC1FF395D4003F0122 /* LogFmdbTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogFmdbTools.h; sourceTree = "<group>"; };
+		FE5C1DBD1FF395D4003F0122 /* LogFmdbTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogFmdbTools.m; sourceTree = "<group>"; };
 		FE8B6D311FEDF375006E1DBD /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		FE8B6D321FEDF375006E1DBD /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		FECE1EAE1FECDE990083E4D0 /* GlobalDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDefine.h; sourceTree = "<group>"; };
@@ -191,6 +200,7 @@
 		FE2150101FEB601B00B1823C /* MainClass */ = {
 			isa = PBXGroup;
 			children = (
+				FE5C1DB51FF38B20003F0122 /* Log */,
 				FE8B6D2F1FEDE197006E1DBD /* Base */,
 				FECE1EA51FECD9D70083E4D0 /* Home */,
 				FE8B6D341FEDF384006E1DBD /* Login */,
@@ -206,6 +216,19 @@
 				FE2150131FEB605500B1823C /* PlayerView.m */,
 			);
 			path = Player;
+			sourceTree = "<group>";
+		};
+		FE5C1DB51FF38B20003F0122 /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				FE5C1DB61FF38B3E003F0122 /* LogModel.h */,
+				FE5C1DB71FF38B3E003F0122 /* LogModel.m */,
+				FE5C1DB91FF38D7B003F0122 /* LogViewController.h */,
+				FE5C1DBA1FF38D7B003F0122 /* LogViewController.m */,
+				FE5C1DBC1FF395D4003F0122 /* LogFmdbTools.h */,
+				FE5C1DBD1FF395D4003F0122 /* LogFmdbTools.m */,
+			);
+			path = Log;
 			sourceTree = "<group>";
 		};
 		FE8B6D2F1FEDE197006E1DBD /* Base */ = {
@@ -475,8 +498,11 @@
 				0DDB401B1FEA9FDC005F7777 /* AppDelegate.m in Sources */,
 				FE8B6D331FEDF375006E1DBD /* LoginViewController.m in Sources */,
 				FECE1EB51FECDF340083E4D0 /* UserHelper.m in Sources */,
+				FE5C1DB81FF38B3E003F0122 /* LogModel.m in Sources */,
 				FE2150141FEB605500B1823C /* PlayerView.m in Sources */,
 				FEEBBF171FF0928A00CDB40B /* HomeVideoCollectionCell.m in Sources */,
+				FE5C1DBE1FF395D4003F0122 /* LogFmdbTools.m in Sources */,
+				FE5C1DBB1FF38D7B003F0122 /* LogViewController.m in Sources */,
 				FECE1EBE1FECEB6D0083E4D0 /* HomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

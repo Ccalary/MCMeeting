@@ -11,5 +11,5 @@ pod 'MBProgressHUD', '~> 1.0.0'
 pod 'FDFullscreenPopGesture', '1.1'
 pod 'Masonry'
 pod 'IQKeyboardManager'
-
+pod 'FMDB'
 end

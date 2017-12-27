@@ -10,5 +10,8 @@
 
 @interface HomeVideoCollectionCell : UICollectionViewCell
 @property (nonatomic, strong) UILabel *titleLabel;
-- (void)reloadWith:(NSString *)url andTag:(int)tag;
+@property (nonatomic, assign) NSUInteger indexRow;
+@property (nonatomic, assign, getter=isVisible) BOOL visible; //是否可见
+- (void)reloadCell;
+- (void)reloadWithUrl:(NSString *)url andRow:(NSUInteger)row;
 @end

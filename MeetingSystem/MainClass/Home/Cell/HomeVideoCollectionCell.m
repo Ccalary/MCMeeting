@@ -23,12 +23,12 @@
 }
 
 - (void)initView{
-    self.backgroundColor = [UIColor bgColorMain];
+    self.backgroundColor = [UIColor grayColor];
     NSLog(@"创建");
     self.layer.borderWidth = 1;
     self.layer.borderColor = [UIColor blueColor].CGColor;
     
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 20)];
     [self.contentView addSubview:_titleLabel];
     //调整参数
     _options = [IJKFFOptions optionsByDefault];
@@ -40,13 +40,21 @@
     self.ijkPlayer.view.frame = self.contentView.bounds;
 }
 
-- (void)reloadWith:(NSString *)url andTag:(int)tag{
-    DLog(@"刷新cell");
-    [_ijkPlayer shutdown];
-    _ijkPlayer = [[IJKFFMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:url] withOptions:self.options];
-    [_ijkPlayer prepareToPlay];
-    _ijkPlayer.scalingMode = IJKMPMovieScalingModeAspectFit;
-    [self addSubview:self.ijkPlayer.view];
-    self.ijkPlayer.view.frame = self.contentView.bounds;
+- (void)reloadCell{
+    DLog(@"reloadCell:%lu",(unsigned long)self.indexRow);
+    self.backgroundColor = [UIColor grayColor];
+    
+}
+
+- (void)reloadWithUrl:(NSString *)url andRow:(NSUInteger)row{
+    DLog(@"刷新cell:%lu",(unsigned long)row);
+    self.backgroundColor = [UIColor bgColorMain];
+    
+//    [_ijkPlayer stop];
+//    _ijkPlayer = [[IJKFFMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:url] withOptions:self.options];
+//    [_ijkPlayer prepareToPlay];
+//    _ijkPlayer.scalingMode = IJKMPMovieScalingModeAspectFit;
+//    [self addSubview:self.ijkPlayer.view];
+//    self.ijkPlayer.view.frame = self.contentView.bounds;
 }
 @end

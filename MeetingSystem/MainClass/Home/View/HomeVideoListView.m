@@ -53,7 +53,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     //    return self.dataArray.count;
-    return 10;
+    return 50;
 }
 
 //cell的记载
@@ -61,6 +61,8 @@
 {
     HomeVideoCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellIdentifier" forIndexPath:indexPath];
     cell.titleLabel.text = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
+    cell.indexRow = indexPath.row;
+    [cell reloadCell];
     return cell;
 }
 
@@ -98,8 +100,10 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     
     if (decelerate == NO)//没有减速动画时
-        NSLog(@"endDrag");
-    [self reloadVisibleCellsWithOffset:scrollView.contentOffset];
+    {
+      NSLog(@"endDrag");
+      [self reloadVisibleCellsWithOffset:scrollView.contentOffset];
+    }
 }
 
 /**
@@ -113,14 +117,9 @@
 }
 
 - (void)reloadVisibleCellsWithOffset:(CGPoint)offset{
-
-    CGFloat pageSize = itemSpacing + itemWidth;
-    //四舍五入
-    NSInteger page = roundf(offset.x / pageSize);
     NSArray *array = [self.mCollectionView visibleCells];
-
     for (HomeVideoCollectionCell *cell in array){
-         [cell reloadWith:@"http://wvideo.spriteapp.cn/video/2016/0328/56f8ec01d9bfe_wpd.mp4" andTag:4];
+        [cell reloadWithUrl:@"http://wvideo.spriteapp.cn/video/2016/0328/56f8ec01d9bfe_wpd.mp4" andRow:cell.indexRow];
     }
 }
 @end
