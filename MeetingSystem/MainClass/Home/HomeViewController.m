@@ -11,6 +11,7 @@
 #import "HomePlayerModel.h"
 #import "LogViewController.h"
 #import "HomeVideoListView.h"
+#import "LoginViewController.h"
 
 #define url_0 @"rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp"
 #define url_1 @"rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov"
@@ -125,7 +126,7 @@
 }
 
 - (void)buttonAction{
-    [self.navigationController pushViewController:[LogViewController new] animated:YES];
+    [self.navigationController pushViewController:[LoginViewController new] animated:YES];
 }
 
 #pragma mark - 播放器界面代理

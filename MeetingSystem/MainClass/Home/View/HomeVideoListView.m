@@ -15,11 +15,20 @@
     CGFloat itemSpacing;//item 间隔
 }
 @property (nonatomic, strong) UICollectionView *mCollectionView;
+@property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) NSMutableArray *visibleArray; //可见cell的数组
 @end
 @implementation HomeVideoListView
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]){
+        _visibleArray = [NSMutableArray array];
+        _dataArray = [NSMutableArray array];
         [self initView];
+        //加载可见cell的播放器
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             [self reloadVisibleCellsWithOffset:CGPointMake(0, 0)];
+        });
+       
     }
     return self;
 }
@@ -74,6 +83,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    HomeVideoCollectionCell *cell = (HomeVideoCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell reloadCell];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -101,7 +112,7 @@
     
     if (decelerate == NO)//没有减速动画时
     {
-      NSLog(@"endDrag");
+      DLog(@"endDrag");
       [self reloadVisibleCellsWithOffset:scrollView.contentOffset];
     }
 }
@@ -112,14 +123,28 @@
  */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     // scrollView已经完全静止
-    NSLog(@"endDecelerating");
+    DLog(@"endDecelerating");
     [self reloadVisibleCellsWithOffset:scrollView.contentOffset];
 }
 
 - (void)reloadVisibleCellsWithOffset:(CGPoint)offset{
     NSArray *array = [self.mCollectionView visibleCells];
     for (HomeVideoCollectionCell *cell in array){
-        [cell reloadWithUrl:@"http://wvideo.spriteapp.cn/video/2016/0328/56f8ec01d9bfe_wpd.mp4" andRow:cell.indexRow];
+        BOOL canReload = YES;
+        for (NSString *indexRow in self.visibleArray){//如果是还是原来可见的,并且在滑动期间没有销毁，则不刷新
+            if ([indexRow intValue] == (int)cell.indexRow && cell.isVisible){
+                canReload = NO;
+                break;
+            }
+        }
+        if (canReload){
+            DLog(@"刷新");
+            [cell reloadWithUrl:@"http://wvideo.spriteapp.cn/video/2016/0328/56f8ec01d9bfe_wpd.mp4" andRow:cell.indexRow];
+        }
+    }
+    [self.visibleArray removeAllObjects];
+    for (HomeVideoCollectionCell *cell in array){
+        [self.visibleArray addObject:[NSString stringWithFormat:@"%lu",(unsigned long)cell.indexRow]];
     }
 }
 @end

@@ -12,4 +12,5 @@ pod 'FDFullscreenPopGesture', '1.1'
 pod 'Masonry'
 pod 'IQKeyboardManager'
 pod 'FMDB'
+pod 'FMDBMigrationManager'
 end

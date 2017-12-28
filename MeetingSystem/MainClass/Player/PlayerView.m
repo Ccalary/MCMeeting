@@ -77,7 +77,6 @@
         [self.ijkPlayer prepareToPlay];
     }
 */
-    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     label.text = [NSString stringWithFormat:@"%d",self.type];
     label.textColor = [UIColor whiteColor];

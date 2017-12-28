@@ -12,6 +12,13 @@
 /** 设备是否是iPad */
 + (BOOL)getIsIpad;
 
-/** 获得当前的时间 */
+#pragma mark - NSDate
+/** 获得当前的时间(yyyy.MM.dd HH:mm:ss) */
 + (NSString *)getCurrentTime;
+
+/** 获得当前的时间戳 */
++ (double)getCurrentTimestamp;
+
+/** 得到当前的之前之后的时间戳 (-1前一天 1后一天)*/
++ (double)getTimestampOffsetDay:(NSInteger)day;
 @end

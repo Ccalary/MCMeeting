@@ -10,7 +10,7 @@
 @class PlayerView;
 @interface HomePlayerModel : NSObject
 /** 播放器 */
-@property (nonatomic, strong) PlayerView *playView;
+@property (nonatomic, weak) PlayerView *playView;
 /** 是否大窗口*/
 @property (nonatomic, assign, getter=isBig) BOOL big;
 /** view的布局 */

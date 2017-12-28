@@ -8,12 +8,15 @@
 
 #import "LogFmdbTools.h"
 #import <FMDB/FMDB.h>
+#import "Migration.h"
+#import "ToolsHelper.h"
 
 #define kOperatorSqlite  @"opetator.sqlite" //数据库名字
 #define kOperatorLogInfo @"operatorLogInfo" //操作日志信息（表名）
 @interface LogFmdbTools()
 {
     FMDatabase *fmdb;
+    NSString *path;
 }
 @end
 
@@ -31,6 +34,9 @@
     if (self = [super init]){
         [self fmdbCreate];
         [self fmdbTableCreate];
+        [self updateFMDB];
+        //数据保留一周，一周以上的数据删除
+        [self deleteDayDateWithCondition:[ToolsHelper getTimestampOffsetDay:-7]];
     }
     return self;
 }
@@ -40,18 +46,35 @@
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES)  lastObject];
     //和上面那个路径相同
     //    NSString *str = [NSHomeDirectory() stringByAppendingString:@"/Documents"];
-    NSString *fileName = [doc stringByAppendingPathComponent:kOperatorSqlite];
+    path = [doc stringByAppendingPathComponent:kOperatorSqlite];
     
     //2.数据库打开、创建
-    fmdb = [FMDatabase databaseWithPath:fileName];
+    fmdb = [FMDatabase databaseWithPath:path];
 }
 
 #pragma mark - FMDB创建表
 - (void)fmdbTableCreate{
     
-    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (ID INTEGER PRIMARY KEY AUTOINCREMENT, time TEXT NOT NULL, roomNo TEXT NOT NULL, operatorId TEXT NOT NULL, content TEXT NOT NULL, result INTEGER NOT NULL);",kOperatorLogInfo];
+    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (ID INTEGER PRIMARY KEY AUTOINCREMENT,timestamp REAL, time TEXT NOT NULL, roomNo TEXT NOT NULL, operatorId TEXT NOT NULL, content TEXT NOT NULL, result INTEGER NOT NULL);",kOperatorLogInfo];
     
     [self fmdbExecuteUpdate:sql];
+}
+
+#pragma mark - 检查数据库更新
+- (void)updateFMDB{
+    
+    FMDBMigrationManager *manager=[FMDBMigrationManager managerWithDatabaseAtPath:path migrationsBundle:[NSBundle mainBundle]];
+//    Migration * migration_1=[[Migration alloc]initWithName:[NSString stringWithFormat:@"%@表新增字段dayTime",kOperatorLogInfo] andVersion:1 andExecuteUpdateArray:@[[NSString stringWithFormat:@"ALTER TABLE %@ ADD dayTime TEXT",kOperatorLogInfo]]];//给表添加dayTime字段
+//    
+//    [manager addMigration:migration_1];
+    
+    BOOL resultState=NO;
+    NSError * error=nil;
+    if (!manager.hasMigrationsTable) {
+        resultState=[manager createMigrationsTable:&error];
+    }
+    resultState=[manager migrateDatabaseToVersion:UINT64_MAX progress:nil error:&error];
+    
 }
 
 //更新操作
@@ -74,13 +97,14 @@
 #pragma mark - FMDB增加数据
 - (void)insertModel:(LogModel *)model{
     NSString *sql = [NSString stringWithFormat:
-                     @"INSERT INTO '%@' ('time', 'roomNo', 'operatorId', 'content', 'result') VALUES ('%@', '%@', '%@', '%@','%d');",kOperatorLogInfo, model.time, model.roomNo, model.operatorId, model.content, model.result];
+                     @"INSERT INTO '%@' ('time', 'timestamp', 'roomNo', 'operatorId', 'content', 'result') VALUES ('%@', '%f' ,'%@', '%@', '%@','%d');",kOperatorLogInfo, model.time, model.timestamp, model.roomNo, model.operatorId, model.content, model.result];
     [self fmdbExecuteUpdate:sql];
 }
 
 #pragma mark - FMDB删除数据
-- (void)deleteData{
-    NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE age='18'",kOperatorLogInfo];
+//根据时间删除数据
+- (void)deleteDayDateWithCondition:(double)condition{
+    NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE timestamp<='%f'",kOperatorLogInfo,condition];
     [self fmdbExecuteUpdate:sql];
 }
 #pragma mark - FMDB更改数据
@@ -90,26 +114,28 @@
 }
 
 #pragma mark - FMDB查找数据
-- (NSArray *)selectData{
+- (NSArray *)findAllData{
     NSString *sqlSelect = [NSString stringWithFormat:@"SELECT * FROM %@",kOperatorLogInfo];
     //根据条件查询
     FMResultSet *resultSet = [fmdb  executeQuery:sqlSelect];
     NSMutableArray *mArray = [NSMutableArray array];
     //遍历结果
     while ([resultSet next]) {
+        double timestamp = [resultSet doubleForColumn:@"timestamp"];
         NSString *time = [resultSet objectForColumn:@"time"];
         NSString *roomNo = [resultSet objectForColumn:@"roomNo"];
         NSString *operatorId = [resultSet objectForColumn:@"operatorId"];
         NSString *content = [resultSet objectForColumn:@"content"];
         int result = [resultSet intForColumn:@"result"];
-        DLog(@"time:%@--content:%@",time,content);
         LogModel *model = [[LogModel alloc] init];
         model.time = time;
+        model.timestamp = timestamp;
         model.roomNo = roomNo;
         model.operatorId = operatorId;
         model.content = content;
         model.result = result;
         [mArray addObject:model];
+        NSLog(@"%@",model);
     }
     return mArray;
 }

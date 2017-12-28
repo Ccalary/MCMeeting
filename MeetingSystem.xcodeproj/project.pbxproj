@@ -32,6 +32,7 @@
 		FE5C1DB81FF38B3E003F0122 /* LogModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5C1DB71FF38B3E003F0122 /* LogModel.m */; };
 		FE5C1DBB1FF38D7B003F0122 /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5C1DBA1FF38D7B003F0122 /* LogViewController.m */; };
 		FE5C1DBE1FF395D4003F0122 /* LogFmdbTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5C1DBD1FF395D4003F0122 /* LogFmdbTools.m */; };
+		FE5C1DC11FF487FF003F0122 /* Migration.m in Sources */ = {isa = PBXBuildFile; fileRef = FE5C1DBF1FF487FF003F0122 /* Migration.m */; };
 		FE8B6D331FEDF375006E1DBD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8B6D321FEDF375006E1DBD /* LoginViewController.m */; };
 		FECE1EB21FECDF270083E4D0 /* ToolsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE1EB11FECDF270083E4D0 /* ToolsHelper.m */; };
 		FECE1EB51FECDF340083E4D0 /* UserHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE1EB41FECDF340083E4D0 /* UserHelper.m */; };
@@ -78,6 +79,8 @@
 		FE5C1DBA1FF38D7B003F0122 /* LogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
 		FE5C1DBC1FF395D4003F0122 /* LogFmdbTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogFmdbTools.h; sourceTree = "<group>"; };
 		FE5C1DBD1FF395D4003F0122 /* LogFmdbTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogFmdbTools.m; sourceTree = "<group>"; };
+		FE5C1DBF1FF487FF003F0122 /* Migration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Migration.m; sourceTree = "<group>"; };
+		FE5C1DC01FF487FF003F0122 /* Migration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Migration.h; sourceTree = "<group>"; };
 		FE8B6D311FEDF375006E1DBD /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		FE8B6D321FEDF375006E1DBD /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		FECE1EAE1FECDE990083E4D0 /* GlobalDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDefine.h; sourceTree = "<group>"; };
@@ -221,6 +224,8 @@
 		FE5C1DB51FF38B20003F0122 /* Log */ = {
 			isa = PBXGroup;
 			children = (
+				FE5C1DC01FF487FF003F0122 /* Migration.h */,
+				FE5C1DBF1FF487FF003F0122 /* Migration.m */,
 				FE5C1DB61FF38B3E003F0122 /* LogModel.h */,
 				FE5C1DB71FF38B3E003F0122 /* LogModel.m */,
 				FE5C1DB91FF38D7B003F0122 /* LogViewController.h */,
@@ -502,6 +507,7 @@
 				FE2150141FEB605500B1823C /* PlayerView.m in Sources */,
 				FEEBBF171FF0928A00CDB40B /* HomeVideoCollectionCell.m in Sources */,
 				FE5C1DBE1FF395D4003F0122 /* LogFmdbTools.m in Sources */,
+				FE5C1DC11FF487FF003F0122 /* Migration.m in Sources */,
 				FE5C1DBB1FF38D7B003F0122 /* LogViewController.m in Sources */,
 				FECE1EBE1FECEB6D0083E4D0 /* HomeViewController.m in Sources */,
 			);

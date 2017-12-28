@@ -7,7 +7,6 @@
 //
 
 #import "HomeVideoCollectionCell.h"
-#import "PlayerView.h"
 #import <IJKMediaFramework/IJKMediaFramework.h>
 @interface HomeVideoCollectionCell()
 @property (nonatomic, strong) IJKFFMoviePlayerController *ijkPlayer; //播放器
@@ -34,27 +33,34 @@
     _options = [IJKFFOptions optionsByDefault];
     //静音设置(1静音)
     [_options setPlayerOptionValue:@"1" forKey:@"an"];
-    _ijkPlayer = [[IJKFFMoviePlayerController alloc] initWithContentURL:nil withOptions:_options];
-    
-    [self addSubview:self.ijkPlayer.view];
-    self.ijkPlayer.view.frame = self.contentView.bounds;
 }
 
 - (void)reloadCell{
     DLog(@"reloadCell:%lu",(unsigned long)self.indexRow);
     self.backgroundColor = [UIColor grayColor];
-    
+    self.visible = NO;
+    [self destroyPlayer];
 }
 
 - (void)reloadWithUrl:(NSString *)url andRow:(NSUInteger)row{
     DLog(@"刷新cell:%lu",(unsigned long)row);
     self.backgroundColor = [UIColor bgColorMain];
-    
-//    [_ijkPlayer stop];
-//    _ijkPlayer = [[IJKFFMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:url] withOptions:self.options];
-//    [_ijkPlayer prepareToPlay];
-//    _ijkPlayer.scalingMode = IJKMPMovieScalingModeAspectFit;
-//    [self addSubview:self.ijkPlayer.view];
-//    self.ijkPlayer.view.frame = self.contentView.bounds;
+    self.visible = YES;
+    [self destroyPlayer];
+   
+    _ijkPlayer = [[IJKFFMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:url] withOptions:self.options];
+    [_ijkPlayer prepareToPlay];
+    _ijkPlayer.scalingMode = IJKMPMovieScalingModeAspectFit;
+    [self addSubview:self.ijkPlayer.view];
+    self.ijkPlayer.view.frame = self.contentView.bounds;
+}
+
+//销毁播放器
+- (void)destroyPlayer{
+    if (self.ijkPlayer){
+        [self.ijkPlayer shutdown];
+        [self.ijkPlayer.view removeFromSuperview];
+        self.ijkPlayer = nil;
+    }
 }
 @end
