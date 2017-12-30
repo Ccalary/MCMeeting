@@ -22,12 +22,10 @@
 }
 
 - (void)initView{
-    self.backgroundColor = [UIColor grayColor];
-    NSLog(@"创建");
-    self.layer.borderWidth = 1;
-    self.layer.borderColor = [UIColor blueColor].CGColor;
+    self.backgroundColor = [UIColor blackColor];
     
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 20)];
+    _titleLabel.textColor = [UIColor whiteColor];
     [self.contentView addSubview:_titleLabel];
     //调整参数
     _options = [IJKFFOptions optionsByDefault];
@@ -37,29 +35,29 @@
 
 - (void)reloadCell{
     DLog(@"reloadCell:%lu",(unsigned long)self.indexRow);
-    self.backgroundColor = [UIColor grayColor];
+  
     self.visible = NO;
     [self destroyPlayer];
 }
 
 - (void)reloadWithUrl:(NSString *)url andRow:(NSUInteger)row{
     DLog(@"刷新cell:%lu",(unsigned long)row);
-    self.backgroundColor = [UIColor bgColorMain];
     self.visible = YES;
     [self destroyPlayer];
    
     _ijkPlayer = [[IJKFFMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:url] withOptions:self.options];
     [_ijkPlayer prepareToPlay];
     _ijkPlayer.scalingMode = IJKMPMovieScalingModeAspectFit;
-    [self addSubview:self.ijkPlayer.view];
+    [self.contentView addSubview:self.ijkPlayer.view];
     self.ijkPlayer.view.frame = self.contentView.bounds;
+    
+    [self.contentView bringSubviewToFront:self.titleLabel];
 }
 
 //销毁播放器
 - (void)destroyPlayer{
     if (self.ijkPlayer){
         [self.ijkPlayer shutdown];
-        [self.ijkPlayer.view removeFromSuperview];
         self.ijkPlayer = nil;
     }
 }
